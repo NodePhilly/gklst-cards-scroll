@@ -5,6 +5,7 @@
   , "dependencies": {
       "express": "2.5.x"
     , "jade": "0.22.x"
-    , "request": "2.2.x"
+    , "oauth": "0.9.x"
+    , "async": "0.1.x"
   }
 }
