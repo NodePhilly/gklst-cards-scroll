@@ -1,3 +1,41 @@
 body {
-	padding-top: 60px;
+	margin: 100px auto 0 auto;
+	width: 980px;
+}
+
+.card {
+	width: 900px;
+	padding: 20px;
+	background-color: #EFF1F1;
+	border: 1px solid #E2E4E4;
+	-webkit-border-radius: 10px;
+	margin-bottom: 100px;
+}
+
+.card .left {
+	float: left;
+	width: 300px;
+}
+
+.card .right {
+	float: left;
+	width: 600px;
+}
+
+.card img {
+	-webkit-border-radius: 10px;
+}
+
+.card h4 {	
+	margin: 10px;
+	margin-left: 30px;
+	font-weight: bold;
+	font-size: 50px;
+	color: #9B9C9C;
+	text-shadow: 1px 1px 0 white;
+	line-height: 1.5em;
+}
+
+.card br.clear {
+	clear: both;
 }

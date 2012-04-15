@@ -1,3 +1,5 @@
 .project
 node_modules/**/*
+gklst-creds.jsonpublic/img/*
+public/img/*.jpg
 gklst-creds.json

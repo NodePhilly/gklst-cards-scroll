@@ -7,5 +7,7 @@
     , "jade": "0.22.x"
     , "oauth": "0.9.x"
     , "async": "0.1.x"
+    , "imagemagick": "0.1.2"
+    , "request": "2.9.x"
   }
 }
