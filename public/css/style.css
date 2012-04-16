@@ -118,7 +118,7 @@ body {
     border-left:rgba(52, 61, 61, 0.5) 1px solid;*/
    	-webkit-box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5);
 
-	overflow: auto;
+	overflow: hidden;
 }
 
 .col3:nth-child(2) {
