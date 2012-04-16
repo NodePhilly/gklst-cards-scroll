@@ -35,16 +35,18 @@ async.series([
         users[user] = JSON.parse(data);
 
         request.get(users[user].data.avatar.large, function(err, response, body) {
-          fs.readFile('public/img/geeks/' + user + '-large.jpg', 'binary', function(err, data) {
+          fs.readFile('./public/img/geeks/' + user + '-large.jpg', 'binary', function(err, data) {
+	    if (err) console.log(err);
             im.resize({
-              srcPath: 'public/img/geeks/' + user + '-large.jpg',
-              dstPath: 'public/img/geeks/' + user + '.jpg',
+              srcPath: './public/img/geeks/' + user + '-large.jpg',
+              dstPath: './public/img/geeks/' + user + '.jpg',
               width: 300
-            }, function() {
+            }, function(err) {
+	      if (err) console.log(err);
               callback();
             });
           });
-        }).pipe(fs.createWriteStream('public/img/geeks/' + user + '-large.jpg'));
+        }).pipe(fs.createWriteStream('./public/img/geeks/' + user + '-large.jpg'));
 		  });
 	  }, seriesCallback);
   },
