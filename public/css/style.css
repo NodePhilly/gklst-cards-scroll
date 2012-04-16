@@ -50,7 +50,7 @@ ul, li {
 	list-style:none;
 }
 
-header, section, article, nav, footer, li, .col3, img, .user-image {
+header, section, article, nav, footer, li, img{
 	display:block;
 }
 
@@ -114,11 +114,9 @@ body {
     	rgba(31, 35, 35, 1.0) 7%,
     	rgba(31, 35, 35, 1.0) 93%,
     	rgba(17, 19, 19, 1.0) 98%);
-    /*border-right:rgba(52, 61, 61, 0.5) 1px solid;
-    border-left:rgba(52, 61, 61, 0.5) 1px solid;*/
-   	-webkit-box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5);
-
-	overflow: auto;
+    border-right:rgba(52, 61, 61, 0.7) 1px solid;
+    border-left:rgba(52, 61, 61, 0.7) 1px solid;
+	overflow: hidden;
 }
 
 .col3:nth-child(2) {
@@ -129,8 +127,17 @@ body {
 
 section.tile {
 	width: 90%;
+	height:auto;
+	
 	margin:0 auto 25px auto;
-	background-image:
+	background:
+	-webkit-linear-gradient(
+		left,
+		rgba(255, 255, 255, 0.0),
+		rgba(0, 0, 0, 0.2) 25%,
+		rgba(42, 49, 49, 1.0) 25.5%,
+		rgba(255, 255, 255, 0.0) 26%
+		),
 	-webkit-linear-gradient(
     	top, 
     	rgba(77, 84, 84, 1.0) 1%,
@@ -145,18 +152,15 @@ section.user-image {
 	width:25%;
 	height:100%;
 	float:left;
-	padding:10px;
-	border-right:rgba(42, 49, 49, 1.0) 2px solid;
-	display:block;
+	padding:15px;
 }
 
-section.tile img {
+section.user-image img {
 	width:95%;
 	height:auto;
 	margin:0 auto 0 auto;
 	border-radius:3px;
-	-webkit-box-shadow:0 1px 0 0 rgba(0, 0, 0, 1.0);
-	vertical-align:middle;
+	-webkit-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.6);
 }
 
 section.right {
@@ -167,8 +171,5 @@ section.right {
 	min-height:100%;
 	margin:0 0 0 10px;
 }
-
-
-
 
 
