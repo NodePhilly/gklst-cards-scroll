@@ -1,74 +1,30 @@
-var creds = require('./gklst-creds.json');
+var async    = require('async')
+  , twitter  = require('./twitter')
+  , geeklist = require('./geeklist');
 
-var fs = require('fs')
-  , util= require('util')
-  , async = require('async')
-  , im = require('imagemagick')
-  , request = require('request')
-  , OAuth = require('oauth').OAuth;
-
-var oa = new OAuth(
-	"http://sandbox-api.geekli.st/v1/oauth/request_token",
-  "http://sandbox-api.geekli.st/v1/oauth/access_token",
-  creds.CONSUMER_KEY,
-  creds.CONSUMER_SECRET,
-  "1.0",
-  null,
-  "HMAC-SHA1"
-);
-
-users = {
-  'timsavery': undefined,
-  'csanz': undefined,
-  'rekatz': undefined
+cache = {
+    geeklist: {}
+  , tweets: []
 };
-
-cards = [];
 
 async.series([
 
-  function(seriesCallback) {
-  	async.map(Object.keys(users), function(user, callback) {
-	    oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user, 'GET', creds.ACCESS_TOKEN, creds.ACCESS_TOKEN_SECRET,  function (error, data, response) {
-	      if (error) callback(error, null);
-	      
-        users[user] = JSON.parse(data);
+  function(callback) {
+  	geeklist.init(function(data) {
+      cache.geeklist = data;
 
-        request.get(users[user].data.avatar.large, function(err, response, body) {
-          fs.readFile('./public/img/geeks/' + user + '-large.jpg', 'binary', function(err, data) {
-	    if (err) console.log(err);
-            im.resize({
-              srcPath: './public/img/geeks/' + user + '-large.jpg',
-              dstPath: './public/img/geeks/' + user + '.jpg',
-              width: 300
-            }, function(err) {
-	      if (err) console.log(err);
-              callback();
-            });
-          });
-        }).pipe(fs.createWriteStream('./public/img/geeks/' + user + '-large.jpg'));
-		  });
-	  }, seriesCallback);
+      callback();
+    });
   },
 
-  function(seriesCallback) {
-    async.map(Object.keys(users), function(user, callback) {
-	    oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user + '/cards', 'GET', creds.ACCESS_TOKEN, creds.ACCESS_TOKEN_SECRET,  function (error, data, response) {
-	      var cardsResult = JSON.parse(data);
+  function(callback) {
+    twitter.init(function(stream) {
+      stream.on('tweet', function(tweet) {
+        cache.tweets.push(tweet)
+      });
 
-	      for (var cardIdx=0; cardIdx<cardsResult.data.cards.length; cardIdx++) {
-	        cards.push({
-	      	  headline: cardsResult.data.cards[cardIdx].headline,
-	          user: {
-              name: user,
-              avatar: '/img/geeks/' + user + '.jpg'
-            }
-	        });
-	      }
-
-	      callback();
-	    });
-	  }, seriesCallback);
+      callback();
+    });
   }
 
 ], function() {
@@ -82,17 +38,10 @@ async.series([
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
     app.use(express.bodyParser());
-    app.use(express.methodOverride());
+    app.use(express.methodOverride());    
     app.use(app.router);
     app.use(express.static(__dirname + '/public'));
-  });
-
-  app.configure('development', function(){
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-  });
-
-  app.configure('production', function(){
-    app.use(express.errorHandler());
   });
 
   app.get('/', routes.index);
