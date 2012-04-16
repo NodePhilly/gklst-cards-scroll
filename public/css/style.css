@@ -13,7 +13,7 @@
 }
 
 html{
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 
 .clear {
@@ -80,12 +80,19 @@ html {
 	padding:0 2% 0 2%;
 }
 
+body {
+	height: 100%;
+}
+
 .col3 {
 	width:32%;
-	min-height:100%;
+	min-height:100%;	
 	float:left;
 
 	border:#ccc 1px solid;
+
+	height: 100%;
+	overflow: auto;
 }
 
 .col3:nth-child(2) {
