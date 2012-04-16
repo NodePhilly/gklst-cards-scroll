@@ -1,6 +1,6 @@
 section.col3
   - each card, idx in cards
-    section.tile(id='card-#{idx}', style='opacity:0.6')
+    section.tile(id='card-#{idx}')
       img(src='#{card.user.avatar}')
       section.right
         h4= card.headline

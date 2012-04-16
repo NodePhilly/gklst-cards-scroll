@@ -15,7 +15,7 @@ function scrollToNextCard() {
 	var thisCard = '#card-' + currentCard;
 
 	$('html, body').animate({ scrollTop: $(thisCard).offset().top - 100 }, 1000, function() {
-		$(previousCard).css({ opacity: 0.6 });
+		$(previousCard).css({ opacity: 1 });
 		$(thisCard).css({ opacity: 1 });
 	});
 };
