@@ -1,41 +1,115 @@
-body {
-	margin: 100px auto 0 auto;
-	width: 980px;
+/* css for node philly live app
+*/
+@charset "utf-8";
+
+/* ==================================== Universals */
+
+* {
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+	outline:none;
+	border:none;
 }
 
-.card {
-	width: 900px;
+html{
+	overflow: hidden;
+}
+
+.clear {
+	clear:both;
+	display:block;
+}
+
+a, a:visited, a:hover, a:focus, a:active {
+	text-decoration:none;
+}
+
+img, a img {
+	outline:none;
+	border:none;
+}
+
+ul, li {
+	list-style:none;
+}
+
+header, section, article, nav, footer, li, .col3 {
+	display:block;
+}
+
+::-moz-selection {
+	background: #28cfbd;
+	color: #000;
+	text-shadow: none; 
+}
+::selection { 
+	background: #28cfbd;
+	color: #000;
+	text-shadow: none;
+}
+
+/* ==================================== Typography */
+
+html {
+	font-size: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	line-height:2em;
+	font-family:sans-serif;
+}
+
+h1, h2, h3, h4 {
+	font-weight:normal;
+}
+
+h4 {
+	font-size:1.8em;
+}
+
+p {
+  font-size:1.2em;
+  color:#666;
+}
+
+/* ==================================== skeleton */
+
+html {
+	width:100%;
+	height:100%;
+	padding:0 2% 0 2%;
+}
+
+.col3 {
+	width:32%;
+	min-height:100%;
+	float:left;
+
+	border:#ccc 1px solid;
+}
+
+.col3:nth-child(2) {
+	margin:0 2% 0 2%;
+}
+
+/* ==================================== tiles */
+
+section.tile {
+	width: 90%;
 	padding: 20px;
-	background-color: #EFF1F1;
-	border: 1px solid #E2E4E4;
-	-webkit-border-radius: 10px;
-	margin-bottom: 100px;
+	border:#ccc 1px solid;
+	border-radius: 10px;
+	margin:0 auto 25px auto;
 }
 
-.card .left {
+section.tile img {
 	float: left;
-	width: 300px;
+	width: 25%;
+	border-radius:10px;
+	margin:0 10px 0 0;
 }
 
-.card .right {
+section.right {
 	float: left;
-	width: 600px;
-}
-
-.card img {
-	-webkit-border-radius: 10px;
-}
-
-.card h4 {	
-	margin: 10px;
-	margin-left: 30px;
-	font-weight: bold;
-	font-size: 50px;
-	color: #9B9C9C;
-	text-shadow: 1px 1px 0 white;
-	line-height: 1.5em;
-}
-
-.card br.clear {
-	clear: both;
+	width: 73%;
 }

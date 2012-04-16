@@ -1,11 +1,13 @@
-div.panelLeft
+section.col3
   - each card, idx in geeklistcards
-    .card(id='card-#{idx}', style='opacity:0.3')
-      img.left(src='#{card.user.avatar}')
-      div.right
+    section.tile(id='card-#{idx}', style='opacity:0.6')
+      img(src='#{card.user.avatar}')
+      section.right
         h4= card.headline
-        h4 -- #{card.user.name}
-      br.clear
-div.panelRight
-script(src='/js/jquery.shuffle.js')
+        p #{card.user.name}
+      .clear
+section.col3
+  &ensp;
+section.col3
+  &ensp;
 script(src='/js/index.js')
