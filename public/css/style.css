@@ -1,4 +1,5 @@
 /* css for node philly live app
+Author: Chatham Financial, Tim Savery, Brett Whitham;
 */
 @charset "utf-8";
 
@@ -14,6 +15,19 @@
 
 html{
 	overflow: hidden;
+	background-image:
+	-webkit-linear-gradient(
+    	top, 
+    	rgba(31, 35, 35, 1.0) 45%,
+    	rgba(17, 19, 19, 0.5) 55%),
+	-webkit-linear-gradient(
+    	left, 
+    	rgba(31, 35, 35, 0.3) 45%,
+    	rgba(17, 19, 19, 0.3) 55%);
+	background-size:5px 5px;
+	background-position:top left;
+	background-repeat:repeat;
+	background-color:rgba(42, 49, 49, 1.0);
 }
 
 .clear {
@@ -23,6 +37,7 @@ html{
 
 a, a:visited, a:hover, a:focus, a:active {
 	text-decoration:none;
+	color:rgba(122, 204, 200, 1.0);
 }
 
 img, a img {
@@ -34,7 +49,7 @@ ul, li {
 	list-style:none;
 }
 
-header, section, article, nav, footer, li, .col3 {
+header, section, article, nav, footer, li, .col3, img, .user-image {
 	display:block;
 }
 
@@ -55,8 +70,9 @@ html {
 	font-size: 100%;
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
-	line-height:2em;
+	line-height:2.2em;
 	font-family:sans-serif;
+	letter-spacing:0.1em;
 }
 
 h1, h2, h3, h4 {
@@ -65,7 +81,8 @@ h1, h2, h3, h4 {
 
 h4 {
 	font-size:1.8em;
-	color:rgba(123, 143, 143, 1.0);
+	color:rgba(160, 185, 185, 1.0);
+	text-shadow:0 -2px 1px #000;
 }
 
 p {
@@ -92,6 +109,9 @@ html {
     	rgba(31, 35, 35, 1.0) 7%,
     	rgba(31, 35, 35, 1.0) 93%,
     	rgba(17, 19, 19, 1.0) 98%);
+    /*border-right:rgba(52, 61, 61, 0.5) 1px solid;
+    border-left:rgba(52, 61, 61, 0.5) 1px solid;*/
+   	-webkit-box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5);
 }
 
 .col3:nth-child(2) {
@@ -102,7 +122,6 @@ html {
 
 section.tile {
 	width: 90%;
-	padding: 20px;
 	margin:0 auto 25px auto;
 	background-image:
 	-webkit-linear-gradient(
@@ -115,18 +134,33 @@ section.tile {
 	border-radius:3px;
 }
 
+section.user-image {
+	width:25%;
+	height:100%;
+	float:left;
+	padding:10px;
+	border-right:rgba(42, 49, 49, 1.0) 2px solid;
+	display:block;
+}
+
 section.tile img {
-	float: left;
-	width: 25%;
+	width:95%;
+	height:auto;
+	margin:0 auto 0 auto;
 	border-radius:3px;
 	-webkit-box-shadow:0 1px 0 0 rgba(0, 0, 0, 1.0);
+	vertical-align:middle;
 }
 
 section.right {
+	width:73%;
+	height:auto;
+	padding:10px;
 	float: left;
-	width: 73%;
+	min-height:100%;
 	margin:0 0 0 10px;
 }
+
 
 
 

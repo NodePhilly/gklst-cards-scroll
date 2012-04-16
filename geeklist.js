@@ -11,7 +11,7 @@ exports.init = function(callback) {
 		users: {
 		  'timsavery': undefined,
 		  'csanz': undefined,
-		  'rekatz': undefined
+		  'rekatz': undefined,
 		},
 		cards: []
 	};
