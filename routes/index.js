@@ -4,10 +4,9 @@ function shuffle(arr) {
 }
 
 exports.index = function(req, res) {
-	var shuffledCards = shuffle(cards);
-
 	res.render('index', {
-		cards: shuffledCards,
-		title: 'Geekliset Achievement Cards'
+		  geeklistcards: shuffle(cache.geeklist.cards)		
+		, tweets: cache.tweets
+		, title: 'Node.Philly Live!'
 	});
 };

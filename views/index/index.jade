@@ -1,9 +1,11 @@
-- each card, idx in cards
-  .card(id='card-#{idx}', style='opacity:0.3')
-    img.left(src='#{card.user.avatar}')
-    div.right
-      h4= card.headline
-      h4 -- #{card.user.name}
-    br.clear
+div.panelLeft
+  - each card, idx in geeklistcards
+    .card(id='card-#{idx}', style='opacity:0.3')
+      img.left(src='#{card.user.avatar}')
+      div.right
+        h4= card.headline
+        h4 -- #{card.user.name}
+      br.clear
+div.panelRight
 script(src='/js/jquery.shuffle.js')
 script(src='/js/index.js')
