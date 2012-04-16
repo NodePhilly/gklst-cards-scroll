@@ -1,7 +1,8 @@
-section.col3
-  - each card, idx in cards
-    section.tile(id='card-#{idx}')
-      img(src='#{card.user.avatar}')
+section.col3(id='geeklist')
+  - each card, idx in geeklistcards
+    section.tile(id='card-#{idx}', style='opacity:1.0')
+      section.user-image
+        img(src='#{card.user.avatar}')
       section.right
         h4= card.headline
         p #{card.user.name}
@@ -10,5 +11,4 @@ section.col3
   &ensp;
 section.col3
   &ensp;
-script(src='/js/jquery.shuffle.js')
 script(src='/js/index.js')
