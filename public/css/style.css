@@ -74,6 +74,7 @@ html {
 	line-height:2.2em;
 	font-family:sans-serif;
 	letter-spacing:0.1em;
+	word-wrap:break-word;
 }
 
 h1, h2, h3, h4 {
@@ -96,11 +97,39 @@ p {
 html {
 	width:100%;
 	height:100%;
-	padding:0 1% 0 1%;
 }
 
 body {
 	height: 100%;
+}
+
+header {
+	width:100%;
+	height:65px;
+	background-color:white;
+	position:fixed;
+	top:0;
+	left:0;
+	background:
+	-webkit-linear-gradient(
+    	top, 
+    	rgba(77, 84, 84, 1.0) 5%,
+    	rgba(52, 61, 61, 1.0) 5%,
+    	rgba(52, 61, 61, 1.0) 45%,
+    	rgba(42, 49, 49, 1.0) 60%);
+	box-shadow: 0 10px 25px 5px rgba(0, 0, 0, 0.7);
+	z-index:1000;
+}
+
+header .col3 {
+	width:33%;
+	height:100%;
+	background:none;
+	padding:0;
+	margin:0;
+	box-shadow:none;
+	border:none;
+	background-size:auto 40px;
 }
 
 .col3 {
@@ -111,22 +140,42 @@ body {
     -webkit-linear-gradient(
     	left, 
     	rgba(17, 19, 19, 1.0) 2%,
-    	rgba(31, 35, 35, 1.0) 7%,
-    	rgba(31, 35, 35, 1.0) 93%,
+    	rgba(31, 35, 35, 1.0) 10%,
+    	rgba(31, 35, 35, 1.0) 90%,
     	rgba(17, 19, 19, 1.0) 98%);
     border-right:rgba(52, 61, 61, 0.7) 1px solid;
     border-left:rgba(52, 61, 61, 0.7) 1px solid;
+   	box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5);
 	overflow: hidden;
+	padding:80px 0 0 0;
 }
 
-.col3:nth-child(2) {
+.col3:nth-child(3) {
 	width:43%;
 	margin:0 1% 0 1%;
 }
 
-.col3:nth-child(3) {
+.col3:nth-child(4), header .col3:nth-child(3) {
 	width:22%;
+	margin:0;
 }
+
+header .col3:nth-child(1) {
+	background:url('/img/geek.png') no-repeat center;
+}
+header .col3:nth-child(2) {
+	width:44%;
+	margin:0 0.5% 0 0.5%;
+	border-right:rgba(77, 84, 84, 0.6) 2px solid;
+	border-left:rgba(77, 84, 84, 0.6) 2px solid;
+	background:url('/img/tweet.png') no-repeat center;
+}
+header .col3:nth-child(3){
+	background:url('/img/insta.png') no-repeat center;
+}
+
+
+
 
 /* ==================================== tiles */
 
@@ -165,7 +214,7 @@ section.user-image img {
 	height:auto;
 	margin:0 auto 0 auto;
 	border-radius:3px;
-	-webkit-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.6);
+	box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.6);
 }
 
 section.right {
@@ -176,5 +225,6 @@ section.right {
 	min-height:100%;
 	margin:0 0 0 10px;
 }
+
 
 
