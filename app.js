@@ -18,11 +18,11 @@ app.configure(function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
-  app.get('/', routes.index);
+app.get('/', routes.index);
+app.get('/cards', routes.cards);
 
 cache = {
     geeklist: {}
-  , tweets: []
 };
 
 async.series([
@@ -38,7 +38,6 @@ async.series([
   function(callback) {
     twitter.init(function(stream) {
       stream.on('tweet', function(tweet) {
-        cache.tweets.push(tweet)
         io.sockets.emit('tweet', tweet);
       });
 
@@ -50,11 +49,5 @@ async.series([
 
   app.listen(3000);
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-
-  /*io.sockets.on('connection', function(socket) {
-    for (var i=0; i<cache.tweets.length; i++) {
-      socket.emit('tweet', cache.tweets[i]);      
-    }    
-  });*/
 
 });

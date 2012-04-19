@@ -3,17 +3,11 @@ header
   .col3
   .col3
 section.col3(id='geeklist')
-  - each card, idx in geeklistcards
-    section.tile(id='card-#{idx}', style='opacity:1.0')
-      section.user-image
-        img(src='#{card.user.avatar}')
-      section.right
-        h4= card.headline
-        p #{card.user.name}
-      .clear
+  &ensp;
 section.col3(id='tweets')
   &ensp;
 section.col3
   &ensp;
 script(src='/socket.io/socket.io.js')
+script(src='/js/Queue.compressed.js')
 script(src='/js/index.js')
