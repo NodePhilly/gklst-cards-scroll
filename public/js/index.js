@@ -7,6 +7,7 @@ $(document).ready(function() {
   loadCardsQueue(function() {	  
     scrollCards();
     scrollTweets();
+    rotateSponsors();
   });
 });
 
@@ -94,5 +95,49 @@ function scrollTweets() {
     } else {
     	setTimeout(scrollTweets, 3000);
     }
+  }
+};
+
+// ################  SPONSORS
+var sponsorQueue = new Queue();
+sponsorQueue.enqueue('10gen');
+sponsorQueue.enqueue('aca-video');
+sponsorQueue.enqueue('andYet');
+sponsorQueue.enqueue('chatham');
+sponsorQueue.enqueue('comcastlabs');
+sponsorQueue.enqueue('couchbase');
+sponsorQueue.enqueue('energyplus');
+sponsorQueue.enqueue('geeklist');
+sponsorQueue.enqueue('nodejitsu');
+sponsorQueue.enqueue('saucelabs');
+sponsorQueue.enqueue('uber');
+sponsorQueue.enqueue('voltdb');
+sponsorQueue.enqueue('voxer');
+sponsorQueue.enqueue('zivtech');
+
+function rotateSponsors() {  
+  var nextSponsor = sponsorQueue.dequeue();
+  sponsorQueue.enqueue(nextSponsor);
+
+  var nextSponsorElement = $('\
+      <div class="logo">\
+        <img src="/img/sponsors/' + nextSponsor + '-logo.png" />\
+      </div>\
+    ');
+
+  var currentSponsorElement = $('#sponsors .logo');
+
+  if (currentSponsorElement.length > 0) {
+    currentSponsorElement.fadeOut(2000, function() {
+      currentSponsorElement.remove();
+
+      nextSponsorElement.hide().appendTo($('#sponsors')).fadeIn(2000, function() {
+        setTimeout(rotateSponsors, 5000);
+      });
+    });
+  } else {
+    nextSponsorElement.hide().appendTo($('#sponsors')).fadeIn(2000, function() {
+      setTimeout(rotateSponsors, 5000);
+    });
   }
 };
