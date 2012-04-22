@@ -2,8 +2,7 @@ var fs          = require('fs')
   , async       = require('async')
   , request     = require('request')
   , im          = require('imagemagick')
-  , OAuth       = require('oauth').OAuth
-  , credentials = require('./gklst-creds.json');
+  , OAuth       = require('oauth').OAuth;
 
 exports.init = function(callback) {
 
@@ -19,8 +18,8 @@ exports.init = function(callback) {
 	var oa = new OAuth(
 	  "http://sandbox-api.geekli.st/v1/oauth/request_token",
 	  "http://sandbox-api.geekli.st/v1/oauth/access_token",
-	  credentials.CONSUMER_KEY,
-	  credentials.CONSUMER_SECRET,
+	  process.env.GKLST_CONSUMER_KEY,
+	  process.env.GKLST_CONSUMER_SECRET,
 	  "1.0",
 	  null,
 	  "HMAC-SHA1"
@@ -30,7 +29,7 @@ exports.init = function(callback) {
 
 	  function(seriesCallback) {
 	  	async.map(Object.keys(alldata.users), function(user, callback) {
-		  oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user, 'GET', credentials.ACCESS_TOKEN, credentials.ACCESS_TOKEN_SECRET,  function (error, data, response) {
+		  oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user, 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
 		    if (error) callback(error, null);
 		      
 	        alldata.users[user] = JSON.parse(data);
@@ -52,7 +51,7 @@ exports.init = function(callback) {
 
 	  function(seriesCallback) {
 	    async.map(Object.keys(alldata.users), function(user, callback) {
-		    oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user + '/cards', 'GET', credentials.ACCESS_TOKEN, credentials.ACCESS_TOKEN_SECRET,  function (error, data, response) {
+		    oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user + '/cards', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
 		      var cardsResult = JSON.parse(data);
 
 		      for (var cardIdx=0; cardIdx<cardsResult.data.cards.length; cardIdx++) {

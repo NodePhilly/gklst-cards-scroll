@@ -1,15 +1,22 @@
 {
-    "name": "gklst-cards"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express"     : "2.5.x"
-    , "jade"        : "0.22.x"
-    , "oauth"       : "0.9.x"
-    , "async"       : "0.1.x"
-    , "imagemagick" : "0.1.2"
-    , "request"     : "2.9.x"
-    , "socket.io"   : "0.9.1-1"
-    , "ntwitter"    : "0.2.10"
+  "name": "gklst-cards",
+  "version": "0.0.1-4",
+  "private": true,
+  "dependencies": {
+    "express": "2.5.x",
+    "jade": "0.22.x",
+    "oauth": "0.9.x",
+    "async": "0.1.x",
+    "imagemagick": "0.1.2",
+    "request": "2.9.x",
+    "socket.io": "0.9.1-1",
+    "ntwitter": "0.2.10"
+  },
+  "subdomain": "nodephillylive",
+  "scripts": {
+    "start": "app.js"
+  },
+  "engines": {
+    "node": "v0.6.x"
   }
 }
