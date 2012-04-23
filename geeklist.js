@@ -58,7 +58,7 @@ exports.init = function(callback) {
         });
 	  },
 
-	  function(seriesCallback) {
+	  /*function(seriesCallback) {
 	  	async.map(Object.keys(alldata.users), function(user, callback) {
 	  	  oa.getProtectedResource('http://api.geekli.st/v1/users/' + user, 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
 		    if (!error) {
@@ -80,7 +80,7 @@ exports.init = function(callback) {
 	        }
 		  });
 		}, seriesCallback);
-	  },
+	  },*/
 
 	  function(seriesCallback) {
 	    async.map(Object.keys(alldata.users), function(user, callback) {
