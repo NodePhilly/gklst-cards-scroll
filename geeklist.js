@@ -7,11 +7,7 @@ var fs          = require('fs')
 exports.init = function(callback) {
 
 	var alldata = {
-		users: {
-		  'timsavery': undefined,
-		  'csanz': undefined,
-		  'rekatz': undefined,
-		},
+		users: {},
 		cards: []
 	};
 
@@ -28,23 +24,63 @@ exports.init = function(callback) {
 	async.series([
 
 	  function(seriesCallback) {
-	  	async.map(Object.keys(alldata.users), function(user, callback) {
-		  oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user, 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
-		    if (error) callback(error, null);
-		      
-	        alldata.users[user] = JSON.parse(data);
+        oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/csanz/followers?page=1&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
+          if (error) callback(error, null);
 
-	        request.get(alldata.users[user].data.avatar.large, function(err, response, body) {
-	          fs.readFile('public/img/geeks/' + user + '-large.jpg', 'binary', function(err, data) {
-	            im.resize({
-	              srcPath: 'public/img/geeks/' + user + '-large.jpg',
-	              dstPath: 'public/img/geeks/' + user + '.jpg',
-	              width: 300
-	            }, function() {
-	              callback();
+          var result = JSON.parse(data);
+
+          var followersPage = 1;
+          var followersRetrieved = 0;
+          var total_followers = result.data.total_followers;
+
+          for (var i=0; i<result.data.followers.length; i++) {
+          	alldata.users[result.data.followers[i].screen_name] = result.data.followers[i];
+          	followersRetrieved++;
+          }          
+
+          async.whilst(
+            function() { console.log(total_followers); console.log(followersRetrieved); return followersRetrieved < total_followers; },
+            function(callback) {
+              oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/csanz/followers?page=' + (++followersPage) + '&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
+                var pageResult = JSON.parse(data);
+
+                for (var i=0; i<pageResult.data.followers.length; i++) {
+              	  alldata.users[pageResult.data.followers[i].screen_name] = pageResult.data.followers[i];
+              	  followersRetrieved++;
+                }
+
+                callback();
+              });
+            },
+            function(err) {
+              seriesCallback();
+            }
+          );          
+        });
+	  },
+
+	  function(seriesCallback) {
+	  	console.log(Object.keys(alldata.users));
+	  	
+	  	async.map(Object.keys(alldata.users), function(user, callback) {
+	  	  oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user, 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
+		    if (!error) {
+	          alldata.users[user] = JSON.parse(data);
+
+	          request.get(alldata.users[user].data.avatar.large, function(err, response, body) {
+                console.log('got avatar for %s', user);
+
+	            fs.readFile('public/img/geeks/' + user + '-large.jpg', 'binary', function(err, data) {
+	              im.resize({
+	                srcPath: 'public/img/geeks/' + user + '-large.jpg',
+	                dstPath: 'public/img/geeks/' + user + '.jpg',
+	                width: 300
+	              }, callback);
 	            });
-	          });
-	        }).pipe(fs.createWriteStream('public/img/geeks/' + user + '-large.jpg'));
+	          }).pipe(fs.createWriteStream('public/img/geeks/' + user + '-large.jpg'));
+	        } else {
+	          callback();
+	        }
 		  });
 		}, seriesCallback);
 	  },
@@ -54,14 +90,18 @@ exports.init = function(callback) {
 		    oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user + '/cards', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
 		      var cardsResult = JSON.parse(data);
 
-		      for (var cardIdx=0; cardIdx<cardsResult.data.cards.length; cardIdx++) {
-		        alldata.cards.push({
-		      	  headline: cardsResult.data.cards[cardIdx].headline,
-		          user: {
-	                name: user,
-	                avatar: '/img/geeks/' + user + '.jpg'
-	              }
-		        });
+		      if (!error) { 
+		      	console.log('got %s cards for %s', cardsResult.data.cards.length, user);		      		     
+
+		        for (var cardIdx=0; cardIdx<cardsResult.data.cards.length; cardIdx++) {
+		          alldata.cards.push({
+		      	    headline: cardsResult.data.cards[cardIdx].headline,
+		            user: {
+	                  name: user,
+	                  avatar: '/img/geeks/' + user + '.jpg'
+	                }
+		          });
+		        }
 		      }
 
 		      callback();
@@ -70,7 +110,7 @@ exports.init = function(callback) {
 	  }
 
 	], function() {
-		
+	  
 	  callback(alldata);
 
 	});

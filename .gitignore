@@ -5,3 +5,4 @@ public/img/*.jpg
 gklst-creds.json
 twitter-creds.json
 env.setup.sh
+public/img/geeks/*.jpg
