@@ -11,7 +11,7 @@ exports.init = function(callback) {
 
   var twitStream = new EventEmitter();
 
-  twit.stream('statuses/filter', { track: '#nodephilly' }, function(stream) {
+  twit.stream('statuses/filter', { track: '@NodePhilly' }, function(stream) {
     stream.on('data', function(data) {
       twitStream.emit('tweet', {
         id: data.id,

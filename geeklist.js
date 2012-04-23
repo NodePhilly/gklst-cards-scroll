@@ -12,8 +12,8 @@ exports.init = function(callback) {
 	};
 
 	var oa = new OAuth(
-	  "http://sandbox-api.geekli.st/v1/oauth/request_token",
-	  "http://sandbox-api.geekli.st/v1/oauth/access_token",
+	  "http://api.geekli.st/v1/oauth/request_token",
+	  "http://api.geekli.st/v1/oauth/access_token",
 	  process.env.GKLST_CONSUMER_KEY,
 	  process.env.GKLST_CONSUMER_SECRET,
 	  "1.0",
@@ -24,7 +24,7 @@ exports.init = function(callback) {
 	async.series([
 
 	  function(seriesCallback) {
-        oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/NodePhilly/followers?page=1&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
+        oa.getProtectedResource('http://api.geekli.st/v1/users/NodePhilly/followers?page=1&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
           if (!error) {
             var result = JSON.parse(data);
 
@@ -40,7 +40,7 @@ exports.init = function(callback) {
             async.whilst(
               function() { console.log(total_followers); console.log(followersRetrieved); return followersRetrieved < total_followers; },
               function(callback) {
-                oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/NodePhilly/followers?page=' + (++followersPage) + '&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
+                oa.getProtectedResource('http://api.geekli.st/v1/users/NodePhilly/followers?page=' + (++followersPage) + '&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
                   var pageResult = JSON.parse(data);
 
                   for (var i=0; i<pageResult.data.followers.length; i++) {
@@ -50,12 +50,9 @@ exports.init = function(callback) {
 
                   callback();
                 });
-              },
-              function(err) {
-                seriesCallback();
-              }
-            );          
+              }, seriesCallback);          
           } else {
+          	console.log(error);
           	seriesCallback();
           }
         });
@@ -63,7 +60,7 @@ exports.init = function(callback) {
 
 	  function(seriesCallback) {
 	  	async.map(Object.keys(alldata.users), function(user, callback) {
-	  	  oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user, 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
+	  	  oa.getProtectedResource('http://api.geekli.st/v1/users/' + user, 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
 		    if (!error) {
 	          alldata.users[user] = JSON.parse(data);
 
@@ -87,7 +84,7 @@ exports.init = function(callback) {
 
 	  function(seriesCallback) {
 	    async.map(Object.keys(alldata.users), function(user, callback) {
-		    oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user + '/cards', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
+		    oa.getProtectedResource('http://api.geekli.st/v1/users/' + user + '/cards', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
 		      var cardsResult = JSON.parse(data);
 
 		      if (!error) { 

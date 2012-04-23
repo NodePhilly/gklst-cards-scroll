@@ -46,7 +46,7 @@ async.series([
   }
 
 ], function() {
-
-  app.listen(3000);  
+  console.log('server ready');
+  app.listen(3500);  
 
 });
