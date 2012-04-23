@@ -24,44 +24,44 @@ exports.init = function(callback) {
 	async.series([
 
 	  function(seriesCallback) {
-        oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/csanz/followers?page=1&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
-          if (error) callback(error, null);
+        oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/NodePhilly/followers?page=1&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
+          if (!error) {
+            var result = JSON.parse(data);
 
-          var result = JSON.parse(data);
+            var followersPage = 1;
+            var followersRetrieved = 0;
+            var total_followers = result.data.total_followers;
 
-          var followersPage = 1;
-          var followersRetrieved = 0;
-          var total_followers = result.data.total_followers;
+            for (var i=0; i<result.data.followers.length; i++) {
+          	  alldata.users[result.data.followers[i].screen_name] = result.data.followers[i];
+          	  followersRetrieved++;
+            }          
 
-          for (var i=0; i<result.data.followers.length; i++) {
-          	alldata.users[result.data.followers[i].screen_name] = result.data.followers[i];
-          	followersRetrieved++;
-          }          
+            async.whilst(
+              function() { console.log(total_followers); console.log(followersRetrieved); return followersRetrieved < total_followers; },
+              function(callback) {
+                oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/NodePhilly/followers?page=' + (++followersPage) + '&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
+                  var pageResult = JSON.parse(data);
 
-          async.whilst(
-            function() { console.log(total_followers); console.log(followersRetrieved); return followersRetrieved < total_followers; },
-            function(callback) {
-              oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/csanz/followers?page=' + (++followersPage) + '&count=50', 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET, function(error, data, response) {
-                var pageResult = JSON.parse(data);
+                  for (var i=0; i<pageResult.data.followers.length; i++) {
+              	    alldata.users[pageResult.data.followers[i].screen_name] = pageResult.data.followers[i];
+              	    followersRetrieved++;
+                  }
 
-                for (var i=0; i<pageResult.data.followers.length; i++) {
-              	  alldata.users[pageResult.data.followers[i].screen_name] = pageResult.data.followers[i];
-              	  followersRetrieved++;
-                }
-
-                callback();
-              });
-            },
-            function(err) {
-              seriesCallback();
-            }
-          );          
+                  callback();
+                });
+              },
+              function(err) {
+                seriesCallback();
+              }
+            );          
+          } else {
+          	seriesCallback();
+          }
         });
 	  },
 
 	  function(seriesCallback) {
-	  	console.log(Object.keys(alldata.users));
-	  	
 	  	async.map(Object.keys(alldata.users), function(user, callback) {
 	  	  oa.getProtectedResource('http://sandbox-api.geekli.st/v1/users/' + user, 'GET', process.env.GKLST_ACCESS_TOKEN, process.env.GKLST_ACCESS_TOKEN_SECRET,  function (error, data, response) {
 		    if (!error) {
@@ -111,6 +111,7 @@ exports.init = function(callback) {
 
 	], function() {
 	  
+	  console.log('geeklist data loaded');
 	  callback(alldata);
 
 	});
