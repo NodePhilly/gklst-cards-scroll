@@ -1,9 +1,3 @@
 .project
 node_modules/**/*
-gklst-creds.jsonpublic/img/*
-public/img/*.jpg
-gklst-creds.json
-twitter-creds.json
 env.setup.sh
-public/img/geeks/*.jpg
-public/img/geeks/*.jpg
