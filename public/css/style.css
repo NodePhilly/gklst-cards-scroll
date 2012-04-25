@@ -149,6 +149,10 @@ header .col3 {
 	padding:80px 0 0 0;
 }
 
+.col3#sponsors {
+	background:none;
+}
+
 #tweets {
 	width:43%;
 	margin:0px 1% 0 1%;
@@ -161,6 +165,7 @@ header .col3 {
 
 #sponsors .logo {
 	padding:0 20px;
+	margin:75% 0;
 }
 
 #sponsors .logo img {
@@ -220,7 +225,7 @@ section.user-image img {
 }
 
 section.right {
-	width:73%;
+	width:68%;
 	height:auto;
 	padding:10px;
 	float: left;
